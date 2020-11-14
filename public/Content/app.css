@@ -1,0 +1,16 @@
+/* custom css goes here */
+/* logo */
+#logo {
+    height: auto;
+    width: auto;
+    max-height: 70px;
+    max-width: 70px;
+}
+
+footer {
+    margin-top: 120px;
+}
+
+#addQuestion {
+    margin-bottom: 60px;
+}

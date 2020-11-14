@@ -1,0 +1,61 @@
+<% include ../partials/header.ejs %>
+
+<% include ../partials/main_nav.ejs %>
+
+<!-- Content for the Add page -->
+<div class="container">
+    <div class="row">
+        <div class="offset-md-2 col-md-8">
+            <h1><%= title %></h1>
+
+            <form class="form" method="POST">
+                <div class="form-group">
+                    <label for="nameTextField">Survey Title</label>
+                    <input type="text" class="form-control"
+                    id="nameTextField"
+                    placeholder="Enter the Survey Title"
+                    name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionTextArea">Description</label>
+                    <textarea type="text" class="form-control"
+                    id="descriptionTextArea"
+                    placeholder="Enter a brief description of the survey"
+                    name="description" required></textarea>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-1 col-form-label">Q1</label>
+                    <div class="col-sm-8">
+                    <input type="text" class="form-control" id="inputQuestion" placeholder="Question">
+                    </div>
+                    <select class="custom-select col-sm-3 col-form-control" id="inputGroupSelect01">
+                        <option selected>Question type</option>
+                        <option value="1">Multiple choice</option>
+                        <option value="2">Agree/Disagree</option>
+                        <option value="3">Short Awnser</option>
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-center" id="addQuestion">
+                    <button class="btn btn-success " type="submit">
+                    <i class="fas fa-plus-square"></i> Add Question</button>
+                </div>
+                
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-edit"></i> Submit</button>
+
+                    <a href="/survey-list" class="btn btn-warning">
+                        <i class="fas fa-undo"></i> Cancel</a>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/bottom_nav.ejs %>
+
+<% include ../partials/footer.ejs %>

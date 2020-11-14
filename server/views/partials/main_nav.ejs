@@ -1,0 +1,28 @@
+<!-- Main Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <a class="navbar-brand" href="/">
+    <img src="../../Assets/images/Logo.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy" id="logo">
+    Coach Squad
+    </a>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+
+        <% if (title == "Home") { %>
+        <li class="nav-item active">
+        <% } else { %>
+        <li class="nav-item">
+        <% } %>
+          <a class="nav-link" href="/home"><i class="fas fa-lg fa-home"></i> Home</a>
+        </li>
+
+        <% if (title == "Survey") { %>
+        <li class="nav-item active">
+        <% } else { %>
+        <li class="nav-item">
+        <% } %>
+          <a class="nav-link" href="/survey-list"><i class="fas fa-book"></i> Survey</a>
+        </li>
+        
+    </div>
+  </nav>

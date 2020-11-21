@@ -12,5 +12,10 @@ footer {
 }
 
 #addQuestion {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
+
+#options {
+    display: none;
+}
+

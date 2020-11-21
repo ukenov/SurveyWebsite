@@ -1,0 +1,30 @@
+<% include ../partials/header.ejs %>
+
+<% include ../partials/main_nav.ejs %>
+
+<div class="container questions_page">
+    <h2>Title</h2>
+    <p><%= survey.name %></p>
+    <p><%= survey.description %></p>
+    <h2>Questions</h2>
+    <% for(let i = 0; i < survey.questions.length; i++) { %>
+        <% try { %>
+            <p>Question <%= i + 1 %>: <%= survey.questions[i].question %></p>
+            <% if(survey.questions[i].first != "") { %>
+                <ul>
+                    <li><%= survey.questions[i].first %></li>
+                    <br>
+                    <li><%= survey.questions[i].second %></li>
+                    <br>
+                    <li><%= survey.questions[i].third %></li>
+                    <br>
+                    <li><%= survey.questions[i].fourth %></li>
+                </ul>
+            <% } %>
+        <% } catch(e) { %>
+        <% } %>
+    <% } %>
+
+<% include ../partials/bottom_nav.ejs %>
+
+<% include ../partials/footer.ejs %>

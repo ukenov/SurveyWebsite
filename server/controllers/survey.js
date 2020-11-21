@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
+let surveyId;
 
 // create a reference to the model
 let Survey = require('../models/survey');
@@ -14,6 +15,22 @@ module.exports.displaySurveyList = (req, res, next) => {
         else
         {
             res.render('survey/list', {title: 'Survey', SurveyList: surveyList})
+        }
+    });
+}
+
+module.exports.startSurvey = (req, res, next) => {
+    let id = req.params.id;
+
+    Survey.findById(id, (err, surveyToDisplay) => {
+        if(err) 
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+            res.render('survey/start', {title: 'Take survay', survey: surveyToDisplay});
         }
     });
 }
@@ -36,10 +53,54 @@ module.exports.processAddPage = (req, res, next) => {
         }
         else 
         {
+            // get id of created survey
+            surveyId = newSurvey._id;
             // refresh the survey list
-            res.redirect('/survey-list');
         }
     });
+}
+
+// question controller
+module.exports.displayQuestions = (req, res, next) => {
+    Survey.findById(surveyId, (err, surveyToDisplay) => {
+        if(err) 
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else
+        {
+            res.render('survey/questions', {title: 'Add Questions', survey: surveyToDisplay});
+        }
+    });
+}
+
+// question controller
+module.exports.processQuestions = (req, res, next) => {
+    Survey.update({_id: surveyId},
+        {
+            $push: {
+                questions: [{
+                    "question": req.body.question,
+                    "type": req.body.type,
+                    "first": req.body.first,
+                    "second": req.body.second,
+                    "third": req.body.third,
+                    "fourth": req.body.fourth
+                }]
+            }
+        }, (err) => {
+        if(err) 
+        {
+            console.log(err);
+            res.end(err)
+        }
+        else 
+        {
+            // refresh the survey list
+            res.redirect('/survey-list/questions');
+        }
+    })
 }
 
 module.exports.displayEditPage = (req, res, next) => {

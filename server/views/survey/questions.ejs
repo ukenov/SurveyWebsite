@@ -1,0 +1,89 @@
+<% include ../partials/header.ejs %>
+
+<% include ../partials/main_nav.ejs %>
+
+<div class="container questions_page">
+    <h2>Survey Title</h2>
+    <p><%= survey.name %></p>
+    <h2>Survey Description</h2>
+    <p><%= survey.description %></p>
+    <h2>Questions</h2>
+    <% for(let i = 0; i < survey.questions.length; i++) { %>
+        <% try { %>
+            <p>Question <%= i + 1 %>: <%= survey.questions[i].question %></p>
+            <% if(survey.questions[i].first != "") { %>
+                <ul>
+                    <li><%= survey.questions[i].first %></li>
+                    <br>
+                    <li><%= survey.questions[i].second %></li>
+                    <br>
+                    <li><%= survey.questions[i].third %></li>
+                    <br>
+                    <li><%= survey.questions[i].fourth %></li>
+                </ul>
+            <% } %>
+        <% } catch(e) { %>
+        <% } %>
+    <% } %>
+
+    <form class="form" method="POST">
+
+    <div class="form-group row">
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="inputQuestion" placeholder="Question" name="question">
+                        </div>
+                        
+                        <select class="custom-select col-sm-3 col-form-control" id="inputGroupSelect" name="type">
+                            <option selected>Question type</option>
+                            <option value="Multiple">Multiple choice</option>
+                            <option value="Agree/Disagree">Agree/Disagree</option>
+                            <option value="Short">Short Awnser</option>
+                        </select>
+                    </div>
+
+                    <div id="options">
+                        <ul>
+                            <li>
+                                <input type="text" class="form-control"
+                                id="first"
+                                placeholder="First Option"
+                                name="first">
+                            </li>
+                            <br>
+                            <li>
+                                <input type="text" class="form-control"
+                                id="second"
+                                placeholder="Second Option"
+                                name="second">
+                            </li>
+                            <br>
+                            <li>
+                                <input type="text" class="form-control"
+                                id="third"
+                                placeholder="Third Option"
+                                name="third">
+                            </li>
+                            <br>
+                            <li>
+                                <input type="text" class="form-control"
+                                id="fourth"
+                                placeholder="Fourth Option"
+                                name="fourth">
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-center" id="addQuestion">
+                        <button class="btn btn-success" id="addNewQuestion" type="submit">
+                        <i class="fas fa-plus-square"></i> Add Question</button>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                    <a href="/survey-list" class="btn btn-success">
+                         <i class="fas fa-edit"></i>Create Survey</a>
+                    </div>
+    </form>
+</div>
+<% include ../partials/bottom_nav.ejs %>
+
+<% include ../partials/footer.ejs %>

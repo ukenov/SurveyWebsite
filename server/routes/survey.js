@@ -2,10 +2,22 @@ let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 
-// connect to our Survey Model
-let Survey = require('../models/survey');
+let jwt = require('jsonwebtoken');
 
-let surveyController = require('../controllers/survey')
+let passport = require('passport');
+
+let surveyController = require('../controllers/survey');
+
+// helper function for guard purposes
+function requireAuth(req, res, next)
+{
+    // check if the user is logged in
+    if(!req.isAuthenticated())
+    {
+        return res.redirect('/login');
+    }
+    next();
+}
 
 /* GET Route for the Survey List page - READ Operation */
 router.get('/', surveyController.displaySurveyList);
@@ -14,24 +26,24 @@ router.get('/', surveyController.displaySurveyList);
 router.get('/start/:id', surveyController.startSurvey);
 
 /* GET Route for displaying the Add page - CREATE Operation */
-router.get('/add', surveyController.displayAddPage);
+router.get('/add', requireAuth, surveyController.displayAddPage);
 
 /* POST Route for processing the Add page - CREATE Operation */
-router.post('/add', surveyController.processAddPage);
+router.post('/add', requireAuth, surveyController.processAddPage);
 
 /* GET Route for displaying the whole survey - CREATE Operation */
-router.get('/questions', surveyController.displayQuestions);
+router.get('/questions', requireAuth, surveyController.displayQuestions);
 
-/* POST Route for displaying the whole survey - CREATE Operation */
-router.post('/questions', surveyController.processQuestions);
+/* POST Route for processing the whole survey - CREATE Operation */
+router.post('/questions', requireAuth, surveyController.processQuestions);
 
 /* GET Route for displaying the Edit page - UPDATE Operation */
-router.get('/edit/:id', surveyController.displayEditPage);
+router.get('/edit/:id', requireAuth, surveyController.displayEditPage);
 
 /* POST Route for processing the Edit page - UPDATE Operation */
-router.post('/edit/:id', surveyController.processEditPage);
+router.post('/edit/:id', requireAuth, surveyController.processEditPage);
 
 /* GET to perform Deletion  - DELETE Operation */
-router.get('/delete/:id', surveyController.performDelete);
+router.get('/delete/:id', requireAuth, surveyController.performDelete);
 
 module.exports = router;

@@ -3,6 +3,8 @@ let router = express.Router();
 let mongoose = require('mongoose');
 let surveyId;
 
+let jwt = require('jsonwebtoken');
+
 // create a reference to the model
 let Survey = require('../models/survey');
 
@@ -14,7 +16,10 @@ module.exports.displaySurveyList = (req, res, next) => {
         }
         else
         {
-            res.render('survey/list', {title: 'Survey', SurveyList: surveyList})
+            res.render('survey/list', 
+            {title: 'Survey', 
+            SurveyList: surveyList,
+            displayName: req.user ? req.user.displayName: ''})
         }
     });
 }
@@ -30,13 +35,18 @@ module.exports.startSurvey = (req, res, next) => {
         }
         else
         {
-            res.render('survey/start', {title: 'Take survay', survey: surveyToDisplay});
+            res.render('survey/start', 
+            {title: 'Take survay', 
+            survey: surveyToDisplay,
+            displayName: req.user ? req.user.displayName: ''});
         }
     });
 }
 
 module.exports.displayAddPage = ('/add', (req, res, next) => {
-    res.render('survey/add', {title: 'Add Survey'})
+    res.render('survey/add', 
+    {title: 'Add Survey',
+    displayName: req.user ? req.user.displayName: ''})
 });
 
 module.exports.processAddPage = (req, res, next) => {
@@ -70,7 +80,10 @@ module.exports.displayQuestions = (req, res, next) => {
         }
         else
         {
-            res.render('survey/questions', {title: 'Add Questions', survey: surveyToDisplay});
+            res.render('survey/questions', 
+            {title: 'Add Questions', 
+            survey: surveyToDisplay,
+            displayName: req.user ? req.user.displayName: ''});
         }
     });
 }
@@ -115,7 +128,10 @@ module.exports.displayEditPage = (req, res, next) => {
         else 
         {
             //show the edit view
-            res.render('survey/edit', {title: 'Edit Survey', survey: surveyToEdit});
+            res.render('survey/edit', 
+            {title: 'Edit Survey', 
+            survey: surveyToEdit,
+            displayName: req.user ? req.user.displayName: ''});
         }
     });
 }

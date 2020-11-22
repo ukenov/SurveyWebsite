@@ -23,4 +23,5 @@ let surveyModel = mongoose.Schema({
     collection: "surveys"
 });
 
+module.exports = mongoose.model('Question', questionModel);
 module.exports = mongoose.model('Survey', surveyModel);

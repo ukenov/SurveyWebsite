@@ -19,7 +19,8 @@ module.exports.displaySurveyList = (req, res, next) => {
             res.render('survey/list', 
             {title: 'Survey', 
             SurveyList: surveyList,
-            displayName: req.user ? req.user.displayName: ''})
+            displayName: req.user ? req.user.displayName: '',
+            _id: req.user ? req.user._id: ''})
         }
     });
 }
@@ -52,7 +53,8 @@ module.exports.displayAddPage = ('/add', (req, res, next) => {
 module.exports.processAddPage = (req, res, next) => {
     let newSurvey = Survey({
         "name": req.body.name,
-        "description": req.body.description
+        "description": req.body.description,
+        "user_id": req.user._id
     });
 
     Survey.create(newSurvey, (err, Survey) => {
@@ -65,7 +67,6 @@ module.exports.processAddPage = (req, res, next) => {
         {
             // get id of created survey
             surveyId = newSurvey._id;
-            // refresh the survey list
         }
     });
 }
@@ -118,6 +119,7 @@ module.exports.processQuestions = (req, res, next) => {
 
 module.exports.displayEditPage = (req, res, next) => {
     let id = req.params.id;
+    surveyId = id;
 
     Survey.findById(id, (err, surveyToEdit) => {
         if(err)
@@ -142,7 +144,10 @@ module.exports.processEditPage = (req, res, next) => {
     let updatedSurvey = Survey({
         "_id": id,
         "name": req.body.name,
-        "description": req.body.description
+        "description": req.body.description,
+        "questions": [{
+            "question": req.body.question
+        }]
     });
 
     Survey.updateOne({_id: id}, updatedSurvey, (err) => {
@@ -154,7 +159,54 @@ module.exports.processEditPage = (req, res, next) => {
         else 
         {
             // refresh the survey list
-            res.redirect('/survey-list');
+            res.redirect(req.get('referer'));
+        }
+    })
+}
+
+module.exports.displayEditQuestionPage = (req, res, next) => {
+    let id = req.params.id;
+
+    Survey.findOne({_id: surveyId}, { questions: {$elemMatch: {_id: id}}}
+    , (err, questionToEdit) => {
+        if(err)
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else 
+        {
+            //show the edit view
+            res.render('survey/edit-question', 
+            {title: 'Edit Question', 
+            question: questionToEdit.questions[0],
+            displayName: req.user ? req.user.displayName: ''});
+        }
+    });
+}
+
+module.exports.processEditQuestionPage = (req, res, next) => {
+    let id = req.params.id
+
+    Survey.updateOne({ "questions._id": id}, {
+        $set: {
+                "questions.$.question": req.body.question,
+                "questions.$.type": req.body.type,
+                "questions.$.first": req.body.first,
+                "questions.$.second": req.body.second,
+                "questions.$.third": req.body.third,
+                "questions.$.fourth": req.body.fourth
+        }
+    }, (err) => {
+        if(err) 
+        {
+            console.log(err);
+            res.end(err);
+        }
+        else 
+        {
+            // refresh the survey list
+            res.redirect('/survey-list/questions');
         }
     })
 }
@@ -172,6 +224,29 @@ module.exports.performDelete = (req, res, next) => {
         {
             // refresh the survey list
             res.redirect('/survey-list');
+        }
+    })
+}
+
+module.exports.performDeleteQuestion = (req, res, next) => {
+    let id = req.params.id;
+    
+    Survey.update({_id: surveyId}, {
+        $pull: {
+            questions: {
+                "_id": id
+            }
+        }
+    }, (err) => {
+        if(err) 
+        {
+            console.log(err);
+            res.end(err)
+        }
+        else 
+        {
+            // refresh the survey list
+            res.redirect('/survey-list/questions');
         }
     })
 }

@@ -10,20 +10,62 @@
     <% for(let i = 0; i < survey.questions.length; i++) { %>
         <% try { %>
             <p>Question <%= i + 1 %>: <%= survey.questions[i].question %></p>
-            <% if(survey.questions[i].first != "") { %>
-                <ul>
-                    <li><%= survey.questions[i].first %></li>
-                    <br>
-                    <li><%= survey.questions[i].second %></li>
-                    <br>
-                    <li><%= survey.questions[i].third %></li>
-                    <br>
-                    <li><%= survey.questions[i].fourth %></li>
-                </ul>
-            <% } %>
         <% } catch(e) { %>
         <% } %>
+        <% if(survey.questions[i].type == "Multiple") { %>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].first %>">
+                <label class="form-check-label" for="exampleRadios1">
+                    <%= survey.questions[i].first %>
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].second %>">
+                <label class="form-check-label" for="exampleRadios1">
+                    <%= survey.questions[i].second %>
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].third %>">
+                <label class="form-check-label" for="exampleRadios1">
+                    <%= survey.questions[i].third %>
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].fourth %>">
+                <label class="form-check-label" for="exampleRadios1">
+                    <%= survey.questions[i].fourth %>
+                </label>
+            </div>
+            
+        <% } else if(survey.questions[i].type == "Agree/Disagree") { %>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="Agree">
+            <label class="form-check-label" for="exampleRadios1">
+                Agree
+            </label>
+         </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="Disagree">
+            <label class="form-check-label" for="exampleRadios1">
+               Disagree
+            </label>
+         </div>
+
+        <% } else if(survey.questions[i].type == "Short") { %>
+        <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Short awnser</span>
+        </div>
+        <textarea class="form-control" aria-label="With textarea"></textarea>
+        </div>
+        <% } %>
     <% } %>
+
+    <div class="d-flex justify-content-center">
+        <a href="/survey-list" class="btn btn-success">
+            <i class="fas fa-check-circle"></i> Finish</a>
+    </div>
 
 <% include ../partials/bottom_nav.ejs %>
 

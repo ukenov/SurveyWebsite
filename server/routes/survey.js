@@ -43,7 +43,16 @@ router.get('/edit/:id', requireAuth, surveyController.displayEditPage);
 /* POST Route for processing the Edit page - UPDATE Operation */
 router.post('/edit/:id', requireAuth, surveyController.processEditPage);
 
+/* GET Route for displaying the Edit Question page - UPDATE Operation */
+router.get('/edit-question/:id', requireAuth, surveyController.displayEditQuestionPage);
+
+/* POST Route for processing the Edit Question page - UPDATE Operation */
+router.post('/edit-question/:id', requireAuth, surveyController.processEditQuestionPage);
+
 /* GET to perform Deletion  - DELETE Operation */
 router.get('/delete/:id', requireAuth, surveyController.performDelete);
+
+/* GET to perform Deletion  - DELETE question Operation */
+router.get('/delete-question/:id', requireAuth, surveyController.performDeleteQuestion);
 
 module.exports = router;

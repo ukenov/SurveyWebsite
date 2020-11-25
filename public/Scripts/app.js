@@ -25,6 +25,15 @@ $(function(){
     }
 });
 
+(function(){
+    $(".btn-danger").click(function(event){
+      if(!confirm("Are you sure?")) {
+        event.preventDefault();
+      }
+    });
+
+  })();
+
 
 
 

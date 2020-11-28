@@ -25,6 +25,7 @@ module.exports.displaySurveyList = (req, res, next) => {
     });
 }
 
+// take a survey
 module.exports.startSurvey = (req, res, next) => {
     let id = req.params.id;
 
@@ -44,6 +45,7 @@ module.exports.startSurvey = (req, res, next) => {
     });
 }
 
+// add a survey controller
 module.exports.displayAddPage = ('/add', (req, res, next) => {
     res.render('survey/add', 
     {title: 'Add Survey',
@@ -54,7 +56,9 @@ module.exports.processAddPage = (req, res, next) => {
     let newSurvey = Survey({
         "name": req.body.name,
         "description": req.body.description,
-        "user_id": req.user._id
+        "user_id": req.user._id,
+        "start_time": req.body.startTime,
+        "end_time": req.body.endTime
     });
 
     Survey.create(newSurvey, (err, Survey) => {
@@ -117,6 +121,7 @@ module.exports.processQuestions = (req, res, next) => {
     })
 }
 
+// edit controller
 module.exports.displayEditPage = (req, res, next) => {
     let id = req.params.id;
     surveyId = id;
@@ -150,7 +155,13 @@ module.exports.processEditPage = (req, res, next) => {
         }]
     });
 
-    Survey.updateOne({_id: id}, updatedSurvey, (err) => {
+    Survey.updateOne({_id: id}, {
+        $set: {
+                "_id": id,
+                "name": req.body.name,
+                "description": req.body.description
+            }
+        }, (err) => {
         if(err) 
         {
             console.log(err);
@@ -164,6 +175,7 @@ module.exports.processEditPage = (req, res, next) => {
     })
 }
 
+// edit question controller
 module.exports.displayEditQuestionPage = (req, res, next) => {
     let id = req.params.id;
 

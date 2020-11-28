@@ -1,7 +1,7 @@
 <% include ../partials/header.ejs %>
 
 <% include ../partials/main_nav.ejs %>
-
+<script>datePickerId.min = new Date().toISOString().split("T")[0];</script>
 <!-- Content for the Add page -->
 <div class="container add_page">
     <div class="row">
@@ -25,6 +25,16 @@
                     name="description" required></textarea>
                 </div>
 
+                <div class="form-group">
+                    <label for="startTimeField">Set survey start day</label>
+                    <input type="date" id="datePickerId" name="startTime" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="endTimeField">Set survey end day</label>
+                    <input type="date" id="datePickerId" name="endTime" required />
+                </div>
+                
                 <div class="d-flex justify-content-center">
                     <button class="btn btn-primary" type="submit" id="create_survey">
                     <i class="fas fa-edit"></i> Add questions to survey</button>

@@ -15,6 +15,8 @@ let surveyModel = mongoose.Schema({
     name: String,
     description: String,
     user_id: String,
+    start_time: Date,
+    end_time: Date,
     questions:[questionModel]
 },
 {

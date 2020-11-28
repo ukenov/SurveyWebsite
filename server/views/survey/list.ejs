@@ -1,7 +1,6 @@
 <% include ../partials/header.ejs %>
 
 <% include ../partials/main_nav.ejs %>
-  
 
   <!-- Main content -->
   <section class="jumbotron text-center">
@@ -34,7 +33,8 @@
                         <a href="/survey-list/delete/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary btn-danger">Delete</button></a>
                       <% } %>
                     </div>
-                    <small class="text-muted">9 min</small>
+                    
+                    <small class="text-muted"><%= SurveyList[count].end_time %></small>
                   </div>
                 </div>
               </div>

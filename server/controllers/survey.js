@@ -1,12 +1,17 @@
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
+let nodemailer = require('nodemailer');
 let surveyId;
 
 let jwt = require('jsonwebtoken');
 
 // create a reference to the model
 let Survey = require('../models/survey');
+
+// create the User Model instance
+let userModel = require('../models/user');
+let User = userModel.User; // alias
 
 module.exports.displaySurveyList = (req, res, next) => {
     Survey.find((err, surveyList) => {
@@ -261,4 +266,65 @@ module.exports.performDeleteQuestion = (req, res, next) => {
             res.redirect('/survey-list/questions');
         }
     })
+}
+
+module.exports.finishSurvey = (req, res, next) => {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'couch.squad.survey@gmail.com',
+          pass: 'couchsquad345'
+        }
+    });
+
+    let id = req.params.id;
+    
+    Survey.findOne({_id: id}, (err, finishedSurvey) => {
+            if(err)
+            {
+                console.log(err);
+                res.end(err);
+            }
+            else 
+            {
+                let userIdToEmail = finishedSurvey.user_id;
+                User.findOne({_id: userIdToEmail}, (err, emailToSend) => {
+                    if(err)
+                    {
+                        console.log(err);
+                        res.end(err);
+                    }
+                    else 
+                    {
+                        let awnserArr = req.body;
+                        let textToSend = "";
+                        for(let i = 0; i < finishedSurvey.questions.length; i++) {
+                            let quest = i + 1 + ". " + finishedSurvey.questions[i].question + "\n";
+                            let awn = Object.values(awnserArr)[i] + "\n";
+                            let comb = quest.concat(awn);
+                            textToSend += comb;
+                        }
+                        
+                        let mailOptions = {
+                            from: 'couch.squad.survey@gmail.com',
+                            to: emailToSend.email,
+                            subject: finishedSurvey.name + ' survey awnsers',
+                            text: textToSend
+                        };
+
+                        transporter.sendMail(mailOptions, function(error, info){
+                            if (error) 
+                            {
+                              console.log(error);
+                            } 
+                            else 
+                            {
+                              console.log('Email sent: ' + info.response);
+                              res.redirect('/survey-list');
+                            }
+                        });
+                    }
+                });
+            }
+    });
 }

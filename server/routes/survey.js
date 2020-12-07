@@ -55,4 +55,7 @@ router.get('/delete/:id', requireAuth, surveyController.performDelete);
 /* GET to perform Deletion  - DELETE question Operation */
 router.get('/delete-question/:id', requireAuth, surveyController.performDeleteQuestion);
 
+/* GET to perform Deletion  - DELETE question Operation */
+router.post('/start/:id', surveyController.finishSurvey);
+
 module.exports = router;

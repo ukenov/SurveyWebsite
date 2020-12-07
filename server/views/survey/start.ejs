@@ -3,44 +3,45 @@
 <% include ../partials/main_nav.ejs %>
 
 <div class="container questions_page">
-    <h2>Title</h2>
-    <p><%= survey.name %></p>
+    <h2><%= survey.name %></h2>
     <p><%= survey.description %></p>
     <h2>Questions</h2>
+    <form class="form" method="POST">
     <% for(let i = 0; i < survey.questions.length; i++) { %>
         <% try { %>
             <p>Question <%= i + 1 %>: <%= survey.questions[i].question %></p>
         <% } catch(e) { %>
         <% } %>
         <% if(survey.questions[i].type == "Multiple") { %>
+        
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].first %>">
+                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].first %>" required>
                 <label class="form-check-label" for="exampleRadios1">
                     <%= survey.questions[i].first %>
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].second %>">
+                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].second %>" required>
                 <label class="form-check-label" for="exampleRadios1">
                     <%= survey.questions[i].second %>
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].third %>">
+                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].third %>" required>
                 <label class="form-check-label" for="exampleRadios1">
                     <%= survey.questions[i].third %>
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].fourth %>">
+                <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].fourth %>" required>
                 <label class="form-check-label" for="exampleRadios1">
                     <%= survey.questions[i].fourth %>
                 </label>
             </div>
-            
+        
         <% } else if(survey.questions[i].type == "Agree/Disagree") { %>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="Agree">
+            <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="Agree" required>
             <label class="form-check-label" for="exampleRadios1">
                 Agree
             </label>
@@ -57,15 +58,19 @@
         <div class="input-group-prepend">
             <span class="input-group-text">Short awnser</span>
         </div>
-        <textarea class="form-control" aria-label="With textarea"></textarea>
+        <textarea class="form-control" aria-label="With textarea" required name="text"></textarea>
         </div>
         <% } %>
     <% } %>
 
+
     <div class="d-flex justify-content-center">
-        <a href="/survey-list" class="btn btn-success">
-            <i class="fas fa-check-circle"></i> Finish</a>
+        <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> Finish</button>
+
+        <a href="/survey-list" class="btn btn-warning">
+            <i class="fas fa-undo"></i> Cancel</a>
     </div>
+    </form>
 
 <% include ../partials/bottom_nav.ejs %>
 

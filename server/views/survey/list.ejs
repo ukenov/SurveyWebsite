@@ -27,14 +27,18 @@
                   <p class="card-text"><%= SurveyList[count].description %></p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
+                      <p><% let d = new Date(); %></p>
+                      <% if(d < SurveyList[count].start_time || d > SurveyList[count].end_time) { %>
+                      <a href="/survey-list/start/<%= SurveyList[count]._id %>"><button disabled type="button" class="btn btn-sm btn-outline-secondary">Start</button></a>
+                      <% } else { %>
                       <a href="/survey-list/start/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary">Start</button></a>
+                      <% } %>
                       <% if((typeof displayName == 'string' && displayName) && (SurveyList[count].user_id == _id)) { %>
                         <a href="/survey-list/edit/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
                         <a href="/survey-list/delete/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary btn-danger">Delete</button></a>
                       <% } %>
                     </div>
                     
-                    <small class="text-muted"><%= SurveyList[count].end_time %></small>
                   </div>
                 </div>
               </div>

@@ -10,9 +10,11 @@ $(function(){
     else if($("div").is('.questions_page')) {
         // hide multiple options if multiple not selected
         let x = document.getElementById("inputGroupSelect");
+        if(x.value == "Multiple") {
+            document.getElementById("options").style.display = "block";
+        }
 
         x.addEventListener("change", function() {   
-            console.log(x.value);
             if(x.value == "Multiple")
             {
                 document.getElementById("options").style.display = "block"; 

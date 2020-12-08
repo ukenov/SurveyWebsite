@@ -40,7 +40,6 @@ $(function(){
     function Start()
     {
         let d = new Date();
-        console.log(d);
     }
 
     window.addEventListener("load", Start);

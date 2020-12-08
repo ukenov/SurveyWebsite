@@ -151,20 +151,13 @@ module.exports.displayEditPage = (req, res, next) => {
 module.exports.processEditPage = (req, res, next) => {
     let id = req.params.id
 
-    let updatedSurvey = Survey({
-        "_id": id,
-        "name": req.body.name,
-        "description": req.body.description,
-        "questions": [{
-            "question": req.body.question
-        }]
-    });
-
     Survey.updateOne({_id: id}, {
         $set: {
                 "_id": id,
                 "name": req.body.name,
-                "description": req.body.description
+                "description": req.body.description,
+                "start_time": req.body.startTime,
+                "end_time": req.body.endTime
             }
         }, (err) => {
         if(err) 

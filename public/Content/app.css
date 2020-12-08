@@ -19,3 +19,10 @@ footer {
     display: none;
 }
 
+#timeStart {
+    visibility: hidden;
+}
+
+#timeEnd {
+    visibility: hidden;
+}

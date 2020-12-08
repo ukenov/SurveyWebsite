@@ -5,10 +5,14 @@
   <!-- Main content -->
   <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">Surveys</h1>
-          <p class="lead text-muted">Welcom to our website. Here you can create your own surveys or respond to any survey. Also you can edit survey that you created or delete if you no longer need it</p>
-          <p>
-            <a href="/survey-list/add" class="btn btn-primary" role="button">
+          <h1 class="display-3 text-warning jumbotron-heading font-weight-bold">Surveys</h1>
+          <br>
+          <h3 class="Bootstrap heading"><b>Welcom to our website.<br>
+           Here you can create your own surveys or respond to any survey.<br>
+           Also you can edit survey that you created or delete if you no longer need it</b></h3>
+         <br>          
+         <p class="display-4">
+            <a href="/survey-list/add" class="btn btn-success btn-lg p-3" role="button">
             <i class="fas fa-plus-circle"></i> Create a Survey</a>
           </p>
         </div>
@@ -29,16 +33,15 @@
                     <div class="btn-group">
                       <p><% let d = new Date(); %></p>
                       <% if(d < SurveyList[count].start_time || d > SurveyList[count].end_time) { %>
-                      <a href="/survey-list/start/<%= SurveyList[count]._id %>"><button disabled type="button" class="btn btn-sm btn-outline-secondary">Start</button></a>
+                      <a href="/survey-list/start/<%= SurveyList[count]._id %>"><button disabled type="button" class="btn btn-lg btn-success px-4">Start</button></a>
                       <% } else { %>
-                      <a href="/survey-list/start/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary">Start</button></a>
+                      <a href="/survey-list/start/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-lg btn-success px-4">Start</button></a>
                       <% } %>
                       <% if((typeof displayName == 'string' && displayName) && (SurveyList[count].user_id == _id)) { %>
-                        <a href="/survey-list/edit/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
-                        <a href="/survey-list/delete/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary btn-danger">Delete</button></a>
+                        <a href="/survey-list/edit/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-lg btn-primary px-4">Edit</button></a>
+                        <a href="/survey-list/delete/<%= SurveyList[count]._id %>"><button type="button" class="btn btn-lg btn-danger px-4">Delete</button></a>
                       <% } %>
                     </div>
-                    
                   </div>
                 </div>
               </div>

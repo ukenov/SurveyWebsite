@@ -3,25 +3,28 @@
 <% include ../partials/main_nav.ejs %>
 
 <!-- Content for the Edit page -->
+<script src="/lib/moment/moment.min.js"></script>
+
 <div class="container">
     <div class="row">
         <div class="offset-md-2 col-md-8">
-            <h1><%= title %></h1>
-
+            <h1 class="col display-3 text-warning font-weight-bold text-center"><%= title %></h1>
+            <hr>
+            <br>
             <form class="form" method="POST">
-                <div class="form-group">
+                <div class="form-group font-weight-bold">
                     <label for="nameTextField">Survey Title</label>
-                    <input type="text" class="form-control"
+                    <input type="text" class="form-control form-control-lg"
                     id="nameTextField"
                     placeholder="Enter the Survey Title"
                     name="name" 
                     value="<%= survey.name %>"
                     required>
                 </div>
-
-                <div class="form-group">
+                
+                <div class="form-group font-weight-bold">
                     <label for="descriptionTextField">Description</label>
-                    <input type="text" class="form-control"
+                    <input type="text" class="form-control form-control-lg"
                     id="descriptionTextField"
                     placeholder="Enter the Survey Description"
                     name="description" 
@@ -29,19 +32,49 @@
                     required>
                 </div>
 
-                <button class="btn btn-primary" type="submit">
+                <div class="form-group">
+                    <label for="startTimeField">Set survey start day</label>
+                    <input type="date" id="datePickerStart" name="startTime"
+                    value="<%= survey.start_time %>" 
+                    required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="endTimeField">Set survey end day</label>
+                    <input type="date" id="datePickerEnd" name="endTime"
+                    value="<%= survey.end_time%>" 
+                    required />
+                </div>
+
+                <p id="timeStart"><%= survey.start_time %><p>
+                <p id="timeEnd"><%= survey.end_time %><p>
+                
+                <div class="font-weight-bold form-control-lg" >
+                <button class="btn btn-primary btn-lg px-4" type="submit">
                     <i class="fas fa-save"></i> Save</button>
 
-                    <a href="/survey-list/questions" class="btn btn-primary" type="submit">
+                    <a href="/survey-list/questions" class="btn btn-primary btn-lg px-4" type="submit">
                         <i class="fas fa-pen-square"></i> Edit Questions</a>
 
-                    <a href="/survey-list" class="btn btn-warning">
+                    <a href="/survey-list" class="btn btn-warning btn-lg px-4">
                         <i class="fas fa-undo"></i> Cancel</a>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
+<script> 
+    let startDbTime = document.getElementById('timeStart').innerHTML;
+    let reformatStart = moment(startDbTime).format('YYYY-MM-DD');
+    let dateStart = document.getElementById('datePickerStart');
+    dateStart.value = reformatStart;
+
+    let endDbTime = document.getElementById('timeEnd').innerHTML;
+    let reformatEnd = moment(endDbTime).format('YYYY-MM-DD');
+    let dateEnd = document.getElementById('datePickerEnd');
+    dateEnd.value = reformatEnd;
+</script>
 <% include ../partials/bottom_nav.ejs %>
 
 <% include ../partials/footer.ejs %>

@@ -3,88 +3,114 @@
 <% include ../partials/main_nav.ejs %>
 
 <div class="container questions_page">
-    <h2>Survey Title</h2>
-    <p><%= survey.name %></p>
-    <h2>Survey Description</h2>
-    <p><%= survey.description %></p>
-    <h2>Questions</h2>
+<div class="mt-4"></div>
+<table class="table">
+    <tr >
+        <td> <h3 class="mt-3 h3 text-warning font-weight-bold col">Survey Title</h3></td>
+        <td> <h6 class="mt-4 h5  font-weight-bold text-center col-1"><%= survey.name %></h6> </td>
+    </tr>
+    <tr >
+        <td>   <h3 class="mt-3 h3 text-warning font-weight-bold col">Survey Description</h3> </td>
+        <td>   <h6 class="mt-4 h5 font-weight-bold col"><%= survey.description %> </h6></td>
+    </tr> 
+</table>
+    <hr>
+    <h2 class="mt-4 h2 text-warning font-weight-bold text-center">Questions</h2>
     <% for(let i = 0; i < survey.questions.length; i++) { %>
         <% try { %>
-            <p>Question <%= i + 1 %>: <%= survey.questions[i].question %></p>
-            <a href="/survey-list/edit-question/<%= survey.questions[i]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
-            <a href="/survey-list/delete-question/<%= survey.questions[i]._id %>"><button type="button" class="btn btn-sm btn-outline-secondary btn-danger">Delete</button></a>
-            <% if(survey.questions[i].first != "") { %>
-                <ul>
-                    <li><%= survey.questions[i].first %></li>
-                    <br>
-                    <li><%= survey.questions[i].second %></li>
-                    <br>
-                    <li><%= survey.questions[i].third %></li>
-                    <br>
-                    <li><%= survey.questions[i].fourth %></li>
-                </ul>
-            <% } %>
+            <table class="table">
+                <tr>    
+                    <h6 class= " h6 ">Question <%= i + 1 %>: </h6>
+                </tr>
+                <tr class="d-flex ">
+                    <td>
+                    <h5 class= "h5">  <%= survey.questions[i].question %></h5>
+                    <% if(survey.questions[i].first != "") { %>
+                        <ul>
+                            <li class= "h6 pb-2 pt-2"><%= survey.questions[i].first %></li>
+                            
+                            <li class= "h6 pb-2"><%= survey.questions[i].second %></li>
+                            
+                            <li class= "h6 pb-2"><%= survey.questions[i].third %></li>
+                            
+                            <li class= "h6"><%= survey.questions[i].fourth %></li>
+                        </ul>
+                    <% } %>
+                    </td>
+                        </tr>
+                            <tr class="d-flex">
+                            <td>
+                                <a href="/survey-list/edit-question/<%= survey.questions[i]._id %>">
+                                    <button type="button" class="btn btn-sm btn-primary  px-4 ">Edit</button></a>
+                            </td>
+                            <td>
+                                <a href="/survey-list/delete-question/<%= survey.questions[i]._id %>">
+                                    <button type="button" class="btn btn-sm btn-danger px-4 ">Delete</button></a>
+                    </td>
         <% } catch(e) { %>
         <% } %>
     <% } %>
+    </tr>
+    </table>     
+    <hr>
+    <h4 class="mt-4 h4 text-warning font-weight-bold text-center">Add Questions</h4>
+        <form class="form" method="POST">
 
-    <form class="form" method="POST">
-
-    <div class="form-group row">
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="inputQuestion" placeholder="Question" name="question" required>
+        <div class="form-group row">
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="inputQuestion" placeholder="Question" name="question" required>
+                            </div>
+                            
+                            <select class="custom-select col-sm-3 col-form-control" id="inputGroupSelect" name="type" required>
+                                <option selected value="">Question type</option>
+                                <option value="Multiple">Multiple choice</option>
+                                <option value="Agree/Disagree">Agree/Disagree</option>
+                                <option value="Short">Short Awnser</option>
+                            </select>
                         </div>
-                        
-                        <select class="custom-select col-sm-3 col-form-control" id="inputGroupSelect" name="type" required>
-                            <option selected value="">Question type</option>
-                            <option value="Multiple">Multiple choice</option>
-                            <option value="Agree/Disagree">Agree/Disagree</option>
-                            <option value="Short">Short Awnser</option>
-                        </select>
-                    </div>
 
-                    <div id="options">
-                        <ul>
-                            <li>
-                                <input type="text" class="form-control"
-                                id="first"
-                                placeholder="First Option"
-                                name="first">
-                            </li>
-                            <br>
-                            <li>
-                                <input type="text" class="form-control"
-                                id="second"
-                                placeholder="Second Option"
-                                name="second">
-                            </li>
-                            <br>
-                            <li>
-                                <input type="text" class="form-control"
-                                id="third"
-                                placeholder="Third Option"
-                                name="third">
-                            </li>
-                            <br>
-                            <li>
-                                <input type="text" class="form-control"
-                                id="fourth"
-                                placeholder="Fourth Option"
-                                name="fourth">
-                            </li>
-                        </ul>
-                    </div>
+                        <div id="options">
+                            <ul>
+                                <li>
+                                    <input type="text" class="form-control"
+                                    id="first"
+                                    placeholder="First Option"
+                                    name="first">
+                                </li>
+                                <br>
+                                <li>
+                                    <input type="text" class="form-control"
+                                    id="second"
+                                    placeholder="Second Option"
+                                    name="second">
+                                </li>
+                                <br>
+                                <li>
+                                    <input type="text" class="form-control"
+                                    id="third"
+                                    placeholder="Third Option"
+                                    name="third">
+                                </li>
+                                <br>
+                                <li>
+                                    <input type="text" class="form-control"
+                                    id="fourth"
+                                    placeholder="Fourth Option"
+                                    name="fourth">
+                                </li>
+                            </ul>
+                        </div>
 
-                    <div class="d-flex justify-content-center" id="addQuestion">
-                        <button class="btn btn-success" id="addNewQuestion" type="submit">
-                        <i class="fas fa-plus-square"></i> Add Question</button>
-                    </div>
+                        <div class="d-flex justify-content-center pt- col-3" id="addQuestion">
+                            <button class="btn btn-primary btn-lg btn-block" id="addNewQuestion" type="submit">
+                            <i class="fas fa-plus-square"></i> Add Question</button>
+                        </div>
 
-                    <div class="d-flex justify-content-center">
-                    <a href="/survey-list" class="btn btn-success">
-                        <i class="fas fa-check-circle"></i> Create Survey</a>
-                    </div>
-    </form>
+                        <div class="d-flex justify-content-center">
+                        <a href="/survey-list" class="btn btn-success btn-lg btn-block">
+                            <i class="fas fa-check-circle"></i> Create Survey</a>
+                        </div>
+        </form>
 </div>
 <% include ../partials/bottom_nav.ejs %>
 

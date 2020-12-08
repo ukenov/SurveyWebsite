@@ -3,17 +3,28 @@
 <% include ../partials/main_nav.ejs %>
 
 <div class="container questions_page">
-    <h2><%= survey.name %></h2>
-    <p><%= survey.description %></p>
-    <h2>Questions</h2>
+<div class="mt-4"></div>
+<table class="table">
+    <tr >
+        <td> <h3 class="mt-3 h3 text-warning font-weight-bold col">Survey Title</h3></td>
+        <td> <h6 class="mt-4 h5  font-weight-bold text-center col-1"><%= survey.name %></h6> </td>
+    </tr>
+    <tr >
+        <td>   <h3 class="mt-3 h3 text-warning font-weight-bold col">Survey Description</h3> </td>
+        <td>   <h6 class="mt-4 h5 font-weight-bold col"><%= survey.description %> </h6></td>
+    </tr> 
+</table>
+    <hr>
+    <h2 class="mt-4 h2 text-warning font-weight-bold text-center">Please Answer the Questions</h2> 
     <form class="form" method="POST">
     <% for(let i = 0; i < survey.questions.length; i++) { %>
         <% try { %>
-            <p>Question <%= i + 1 %>: <%= survey.questions[i].question %></p>
+            <hr>
+            <h6 class= " h6 pt-1 pb-2 bg-warning col-7">Question <%= i + 1 %>:</h6>
+            <h6 class= " h6 "> <%= survey.questions[i].question %></h6>
         <% } catch(e) { %>
         <% } %>
         <% if(survey.questions[i].type == "Multiple") { %>
-        
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="<%= survey.questions[i]._id %>" value="<%= survey.questions[i].first %>" required>
                 <label class="form-check-label" for="exampleRadios1">
@@ -56,18 +67,19 @@
         <% } else if(survey.questions[i].type == "Short") { %>
         <div class="input-group">
         <div class="input-group-prepend">
-            <span class="input-group-text">Short awnser</span>
+            <span class="input-group-text font-weight-bold">Short awnser</span>
         </div>
         <textarea class="form-control" aria-label="With textarea" required name="text"></textarea>
         </div>
         <% } %>
     <% } %>
-
+    <br>
 
     <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-success"><i class="fas fa-check-circle"></i> Finish</button>
+        <button type="submit" class="btn btn-success btn-lg px-4">
+        <i class="fas fa-check-circle"></i> Finish</button>
 
-        <a href="/survey-list" class="btn btn-warning">
+        <a href="/survey-list" class="btn btn-warning btn-lg px-4">
             <i class="fas fa-undo"></i> Cancel</a>
     </div>
     </form>

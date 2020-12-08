@@ -12,16 +12,17 @@
 
 <div class="row">
     <div class="offset-md-4 col-md-4">
-        <h1>Please Login</h1>
+        <h1 class="mt-3 h1 text-warning font-weight-bold text-center">Please Login</h1>
+        <br>
         <form method="POST" autocomplete="off">
-            <fieldset class="form-group">
+            <fieldset class="form-group font-weight-bold">
                 <label for="username">Username: </label>
                 <input type="text" class="form-control"
                 name="username" placeholder="Enter username"
                 id="username" required autofocus>
             </fieldset>
 
-            <fieldset class="form-group">
+            <fieldset class="form-group font-weight-bold">
                 <label for="password">Password: </label>
                 <input type="password" class="form-control"
                 name="password" placeholder="Enter password"
@@ -30,13 +31,13 @@
                 <a href="/register">Register Here</a>
             </fieldset>
 
-            <fieldset class="form-group text-right">
+            <fieldset class="form-group text-center">
                 <input type="submit" class="btn btn-success" value="Login">
                 <a href="/">
                     <input type="button" class="btn btn-warning" value="Cancel">
                 </a>
-            </fieldset>
-
+            
+            </div>
         </form>
     </div>
 </div>
